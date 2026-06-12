@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>20.01.2025</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #0a0a0a;
+    color: #eaeaea;
+    line-height: 1.7;
+}
+
+/* INTRO */
+.intro {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.date {
+    font-size: 14px;
+    letter-spacing: 4px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 42px;
+    font-weight: 600;
+}
+
+.subtitle {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #aaa;
+}
+
+button {
+    margin-top: 40px;
+    padding: 12px 26px;
+    background: transparent;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    border-color: #e10600;
+    color: #e10600;
+}
+
+/* STORY */
+.section {
+    max-width: 720px;
+    margin: auto;
+    padding: 120px 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1.2s ease;
+}
+
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    font-weight: 500;
+    color: #fff;
+}
+
+p {
+    color: #bbb;
+    font-size: 16px;
+}
+
+/* SAFETY MODE (very subtle) */
+.safety {
+    background: radial-gradient(circle at top, rgba(255, 204, 0, 0.08), transparent 60%);
+}
+
+/* FINAL */
+.final {
+    text-align: center;
+    padding: 160px 24px;
+}
+
+.final p {
+    max-width: 700px;
+    margin: auto;
+    font-size: 17px;
+}
+
+.highlight {
+    color: #fff;
+    font-weight: 500;
+}
+
+.footer {
+    margin-top: 60px;
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 2px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div class="intro">
+    <div class="date">20.01.2025</div>
+    <div class="title">Uma corrida diferente começou.</div>
+    <div class="subtitle">Nem toda largada é sobre velocidade. Algumas são sobre direção.</div>
+    <button onclick="start()">Começar</button>
+</div>
+
+<!-- STORY -->
+<div class="section" id="s1">
+    <h2>Largada</h2>
+    <p>No dia 20/01/2025, algo simples aconteceu — mas que mudaria completamente o ritmo das coisas.</p>
+</div>
+
+<div class="section" id="s2">
+    <h2>Primeiras voltas</h2>
+    <p>O que começou leve foi ganhando consistência. Respeito, conexão e naturalidade foram se formando sem esforço.</p>
+</div>
+
+<div class="section" id="s3">
+    <h2>Ritmo de corrida</h2>
+    <p>Nem tudo foi linear. Mas mesmo nos momentos difíceis, a direção nunca deixou de ser a mesma.</p>
+</div>
+
+<div class="section safety" id="s4">
+    <h2>Safety Car</h2>
+    <p>Existem momentos de pausa. Não para parar, mas para entender o valor de continuar juntos com mais consciência.</p>
+</div>
+
+<!-- FINAL -->
+<div class="final section" id="s5">
+    <h2>Última volta</h2>
+
+    <p>
+        Nosso primeiro Dia dos Namorados ❤️<br><br>
+
+        Por mais que você às vezes fique estressadinha comigo kkkkk, eu amo tudo em você.<br><br>
+
+        Você trouxe direção para algo que eu nem sabia que estava construindo.<br><br>
+
+        O que temos hoje não é sobre intensidade momentânea, é sobre consistência.<br><br>
+
+        E talvez isso seja o mais raro de tudo.<br><br>
+
+        <span class="highlight">
+        A ambição material passa. Mas construir uma família baseada em respeito, amor e parceria permanece.
+        </span>
+    </p>
+
+    <div class="footer">
+        20.01.2025 — sem linha de chegada.
+    </div>
+</div>
+
+<script>
+function start() {
+    document.getElementById("s1").scrollIntoView({behavior:"smooth"});
+}
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+        }
+    });
+}, {threshold: 0.2});
+
+document.querySelectorAll('.section').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
