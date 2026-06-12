@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>20.01.2025</title>
+<title>Nosso Dia dos Namorados</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
 * {
     margin: 0;
@@ -15,184 +15,243 @@
 }
 
 body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background: #0a0a0a;
-    color: #eaeaea;
-    line-height: 1.7;
+    font-family: 'Inter', sans-serif;
+    background: #0b0b0b;
+    color: #f5f5f7; /* Cor de texto padrão da Apple para dark mode */
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased; /* Deixa a fonte mais suave */
 }
 
-/* INTRO */
-.intro {
+/* CORAÇÕES DE FUNDO */
+.hearts {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hearts span {
+    position: absolute;
+    bottom: -50px;
+    color: rgba(255, 80, 80, 0.15); /* Corações um pouco mais discretos */
+    font-size: 20px;
+    animation: floatUp linear infinite;
+}
+
+.hearts span:nth-child(1) { left: 10%; animation-duration: 14s; }
+.hearts span:nth-child(2) { left: 20%; animation-duration: 18s; }
+.hearts span:nth-child(3) { left: 35%; animation-duration: 16s; }
+.hearts span:nth-child(4) { left: 50%; animation-duration: 20s; }
+.hearts span:nth-child(5) { left: 65%; animation-duration: 17s; }
+.hearts span:nth-child(6) { left: 80%; animation-duration: 22s; }
+.hearts span:nth-child(7) { left: 90%; animation-duration: 19s; }
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    20% { opacity: 0.5; }
+    100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+}
+
+/* LOGIN */
+.wrap {
     height: 100vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.card {
+    width: 360px;
+    padding: 40px;
+    border-radius: 20px; /* Bordas mais arredondadas */
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px); /* Efeito vidro premium */
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     text-align: center;
 }
 
-.date {
-    font-size: 14px;
-    letter-spacing: 4px;
-    color: #888;
-    margin-bottom: 20px;
+h3 {
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #e8e8ed;
 }
 
-.title {
-    font-size: 42px;
-    font-weight: 600;
-}
-
-.subtitle {
-    margin-top: 10px;
+input {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.2);
+    color: white;
+    text-align: center;
     font-size: 16px;
-    color: #aaa;
+    transition: all 0.3s ease;
+}
+
+/* Remove a borda feia do navegador e adiciona um brilho premium */
+input:focus {
+    outline: none;
+    border-color: rgba(255, 80, 80, 0.5);
+    box-shadow: 0 0 0 3px rgba(255, 80, 80, 0.15);
 }
 
 button {
-    margin-top: 40px;
-    padding: 12px 26px;
-    background: transparent;
-    border: 1px solid #444;
-    color: #fff;
-    border-radius: 30px;
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ff3b30, #d70015); /* Degradê mais refinado */
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Efeito ao passar o mouse */
 button:hover {
-    border-color: #e10600;
-    color: #e10600;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(215, 0, 21, 0.3);
 }
 
-/* STORY */
-.section {
-    max-width: 720px;
-    margin: auto;
-    padding: 120px 24px;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 1.2s ease;
-}
-
-.section.visible {
-    opacity: 1;
+/* Efeito ao clicar */
+button:active {
     transform: translateY(0);
 }
 
-h2 {
-    font-size: 20px;
-    margin-bottom: 12px;
-    font-weight: 500;
-    color: #fff;
+#error {
+    margin-top: 15px;
+    color: #ff453a;
+    font-size: 14px;
+    height: 20px; /* Mantém o espaço para não empurrar os elementos */
+    transition: opacity 0.3s ease;
+    opacity: 0;
 }
 
-p {
-    color: #bbb;
-    font-size: 16px;
+/* CONTENT */
+.content {
+    display: none;
+    padding: 80px 20px;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
 }
 
-/* SAFETY MODE (very subtle) */
-.safety {
-    background: radial-gradient(circle at top, rgba(255, 204, 0, 0.08), transparent 60%);
+/* Animação do texto surgindo */
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
-/* FINAL */
-.final {
-    text-align: center;
-    padding: 160px 24px;
-}
-
-.final p {
-    max-width: 700px;
+.text {
+    max-width: 680px; /* Um pouco mais estreito melhora a leitura */
     margin: auto;
-    font-size: 17px;
+    font-size: 18px; /* Fonte levemente maior */
+    line-height: 1.8;
+    color: #a1a1a6; /* Cor de texto de leitura agradável (Apple) */
 }
 
-.highlight {
-    color: #fff;
-    font-weight: 500;
+.text b, .text strong {
+    color: #f5f5f7; /* Destaca trechos em branco puro */
 }
 
-.footer {
-    margin-top: 60px;
-    font-size: 12px;
-    color: #666;
-    letter-spacing: 2px;
+h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    font-weight: 600;
+    /* Título com degradê */
+    background: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
-<div class="intro">
-    <div class="date">20.01.2025</div>
-    <div class="title">Uma corrida diferente começou.</div>
-    <div class="subtitle">Nem toda largada é sobre velocidade. Algumas são sobre direção.</div>
-    <button onclick="start()">Começar</button>
+<div class="hearts">
+    <span>❤</span>
+    <span>❤</span>
+    <span>❤</span>
+    <span>❤</span>
+    <span>❤</span>
+    <span>❤</span>
+    <span>❤</span>
 </div>
 
-<!-- STORY -->
-<div class="section" id="s1">
-    <h2>Largada</h2>
-    <p>No dia 20/01/2025, algo simples aconteceu — mas que mudaria completamente o ritmo das coisas.</p>
+<div class="wrap" id="login">
+    <div class="card">
+        <h3>Digite a senha</h3>
+        <input type="password" id="password" placeholder="Sua senha secreta">
+        <button onclick="check()">Entrar</button>
+        <div id="error">Senha incorreta</div>
+    </div>
 </div>
 
-<div class="section" id="s2">
-    <h2>Primeiras voltas</h2>
-    <p>O que começou leve foi ganhando consistência. Respeito, conexão e naturalidade foram se formando sem esforço.</p>
-</div>
-
-<div class="section" id="s3">
-    <h2>Ritmo de corrida</h2>
-    <p>Nem tudo foi linear. Mas mesmo nos momentos difíceis, a direção nunca deixou de ser a mesma.</p>
-</div>
-
-<div class="section safety" id="s4">
-    <h2>Safety Car</h2>
-    <p>Existem momentos de pausa. Não para parar, mas para entender o valor de continuar juntos com mais consciência.</p>
-</div>
-
-<!-- FINAL -->
-<div class="final section" id="s5">
-    <h2>Última volta</h2>
-
-    <p>
-        Nosso primeiro Dia dos Namorados ❤️<br><br>
-
-        Por mais que você às vezes fique estressadinha comigo kkkkk, eu amo tudo em você.<br><br>
-
-        Você trouxe direção para algo que eu nem sabia que estava construindo.<br><br>
-
-        O que temos hoje não é sobre intensidade momentânea, é sobre consistência.<br><br>
-
-        E talvez isso seja o mais raro de tudo.<br><br>
-
-        <span class="highlight">
-        A ambição material passa. Mas construir uma família baseada em respeito, amor e parceria permanece.
-        </span>
-    </p>
-
-    <div class="footer">
-        20.01.2025 — sem linha de chegada.
+<div class="content" id="content">
+    <div class="text">
+        <h2>Nosso Dia dos Namorados</h2>
+        Nosso primeiro Dia dos Namoradossss ❤️<br><br>
+        Por mais que você às vezes (quase sempre kkkkk) fique estressadinha comigo, eu amo tudo em você.<br><br>
+        Nossa união foi construída com muito <strong>respeito, carinho e admiração</strong> durante todo o tempo em que fomos nos conhecendo. Nunca vou me cansar de dizer o quanto sou grato por ter você na minha vida. Você apareceu em um momento em que eu nem sabia que precisava de alguém como você.<br><br>
+        Você me ensinou muitas coisas e continua me ensinando todos os dias. Meu maior desejo é conquistar tudo o que há de melhor neste mundo ao seu lado, porque é com você que eu quero viver minhas melhores experiências, realizar meus sonhos e construir meu futuro.<br><br>
+        Você trouxe um <strong>novo sentido para a minha vida</strong>, e isso é o que mais me faz feliz hoje.<br><br>
+        Por mais que tenhamos alguns desentendimentos de vez em quando, o que é completamente normal, nossos pensamentos, valores e objetivos sempre estiveram muito alinhados, e isso é uma das coisas mais importantes dentro de um relacionamento.<br><br>
+        Hoje temos um amadurecimento que muitas pessoas, mesmo com mais idade, não conseguem alcançar. E acredito que é isso que mantém viva a nossa maior ambição: <strong>a construção de uma família</strong>.<br><br>
+        A ambição material é natural e faz parte da vida, mas é passageira. Com o tempo, tudo isso perde valor. Já a ambição de construir uma família, baseada em amor, respeito, companheirismo, compromisso e união, é algo que permanece. É um sonho que atravessa os anos e ganha ainda mais significado com o tempo.<br><br>
+        E, se Deus permitir, é esse sonho que eu quero continuar construindo ao seu lado. Feliz nosso primeiro Dia dos Namorados. Eu te amo ❤️
     </div>
 </div>
 
 <script>
-function start() {
-    document.getElementById("s1").scrollIntoView({behavior:"smooth"});
+const SECRET = "20012025";
+
+function check() {
+    const val = document.getElementById("password").value;
+    const loginWrap = document.getElementById("login");
+    const content = document.getElementById("content");
+    const errorMsg = document.getElementById("error");
+
+    if(val === SECRET) {
+        // Esconde o erro se estiver aparecendo
+        errorMsg.style.opacity = "0";
+        
+        // Faz o card de login sumir suavemente
+        loginWrap.style.opacity = "0";
+        loginWrap.style.transform = "scale(0.95)";
+        
+        // Aguarda a animação de saída antes de mostrar o texto
+        setTimeout(() => {
+            loginWrap.style.display = "none";
+            content.style.display = "block";
+            
+            // Força a renderização do display: block antes de animar a opacidade
+            setTimeout(() => {
+                content.style.animation = "slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards";
+            }, 50);
+        }, 600); // 600ms é o tempo da transição no CSS
+    } else {
+        // Mostra a mensagem de erro
+        errorMsg.style.opacity = "1";
+    }
 }
 
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            entry.target.classList.add("visible");
-        }
-    });
-}, {threshold: 0.2});
-
-document.querySelectorAll('.section').forEach(el => observer.observe(el));
+// Permite apertar "Enter" para fazer o login
+document.getElementById("password").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        check();
+    }
+});
 </script>
 
 </body>
