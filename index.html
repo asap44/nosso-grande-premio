@@ -17,9 +17,9 @@
 body {
     font-family: 'Inter', sans-serif;
     background: #0b0b0b;
-    color: #f5f5f7; /* Cor de texto padrão da Apple para dark mode */
+    color: #f5f5f7;
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased; /* Deixa a fonte mais suave */
+    -webkit-font-smoothing: antialiased;
 }
 
 /* CORAÇÕES DE FUNDO */
@@ -34,23 +34,28 @@ body {
 .hearts span {
     position: absolute;
     bottom: -50px;
-    color: rgba(255, 80, 80, 0.15); /* Corações um pouco mais discretos */
-    font-size: 20px;
+    color: rgba(255, 80, 80, 0.15);
     animation: floatUp linear infinite;
 }
 
-.hearts span:nth-child(1) { left: 10%; animation-duration: 14s; }
-.hearts span:nth-child(2) { left: 20%; animation-duration: 18s; }
-.hearts span:nth-child(3) { left: 35%; animation-duration: 16s; }
-.hearts span:nth-child(4) { left: 50%; animation-duration: 20s; }
-.hearts span:nth-child(5) { left: 65%; animation-duration: 17s; }
-.hearts span:nth-child(6) { left: 80%; animation-duration: 22s; }
-.hearts span:nth-child(7) { left: 90%; animation-duration: 19s; }
-
 @keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 0; }
+    0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0; }
     20% { opacity: 0.5; }
-    100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+    100% { transform: translateY(-110vh) scale(1.5) rotate(360deg); opacity: 0; }
+}
+
+/* EXPLOSÃO DE CORAÇÕES (AO ACERTAR A SENHA) */
+.explosion-heart {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    font-size: 24px;
+    animation: explode 1s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes explode {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
 }
 
 /* LOGIN */
@@ -65,27 +70,33 @@ body {
 }
 
 .card {
-    width: 360px;
+    width: 380px;
     padding: 40px;
-    border-radius: 20px; /* Bordas mais arredondadas */
+    border-radius: 20px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(16px); /* Efeito vidro premium */
+    backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     text-align: center;
 }
 
 h3 {
-    font-weight: 500;
-    margin-bottom: 5px;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
     color: #e8e8ed;
+}
+
+.subtitle {
+    color: #a1a1a6;
+    font-size: 14px;
+    margin-bottom: 25px;
 }
 
 input {
     width: 100%;
     padding: 14px;
-    margin-top: 20px;
     border-radius: 12px;
     border: 1px solid rgba(255,255,255,0.15);
     background: rgba(0,0,0,0.2);
@@ -95,7 +106,6 @@ input {
     transition: all 0.3s ease;
 }
 
-/* Remove a borda feia do navegador e adiciona um brilho premium */
 input:focus {
     outline: none;
     border-color: rgba(255, 80, 80, 0.5);
@@ -108,7 +118,7 @@ button {
     padding: 14px;
     border: none;
     border-radius: 12px;
-    background: linear-gradient(135deg, #ff3b30, #d70015); /* Degradê mais refinado */
+    background: linear-gradient(135deg, #ff3b30, #d70015);
     color: white;
     font-weight: 600;
     font-size: 16px;
@@ -116,27 +126,32 @@ button {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Efeito ao passar o mouse */
 button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(215, 0, 21, 0.3);
 }
 
-/* Efeito ao clicar */
 button:active {
     transform: translateY(0);
+}
+
+.hint {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #636366;
+    font-style: italic;
 }
 
 #error {
     margin-top: 15px;
     color: #ff453a;
     font-size: 14px;
-    height: 20px; /* Mantém o espaço para não empurrar os elementos */
+    height: 20px;
     transition: opacity 0.3s ease;
     opacity: 0;
 }
 
-/* CONTENT */
+/* CONTENT (CARTA) */
 .content {
     display: none;
     padding: 80px 20px;
@@ -145,22 +160,21 @@ button:active {
     opacity: 0;
 }
 
-/* Animação do texto surgindo */
 @keyframes slideUpFade {
     0% { opacity: 0; transform: translateY(40px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
 .text {
-    max-width: 680px; /* Um pouco mais estreito melhora a leitura */
+    max-width: 680px;
     margin: auto;
-    font-size: 18px; /* Fonte levemente maior */
+    font-size: 18px;
     line-height: 1.8;
-    color: #a1a1a6; /* Cor de texto de leitura agradável (Apple) */
+    color: #a1a1a6;
 }
 
-.text b, .text strong {
-    color: #f5f5f7; /* Destaca trechos em branco puro */
+.text strong {
+    color: #f5f5f7;
 }
 
 h2 {
@@ -168,7 +182,6 @@ h2 {
     margin-bottom: 50px;
     font-size: 2.5rem;
     font-weight: 600;
-    /* Título com degradê */
     background: linear-gradient(to right, #ff758c 0%, #ff7eb3 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -178,22 +191,18 @@ h2 {
 
 <body>
 
-<div class="hearts">
-    <span>❤</span>
-    <span>❤</span>
-    <span>❤</span>
-    <span>❤</span>
-    <span>❤</span>
-    <span>❤</span>
-    <span>❤</span>
-</div>
+<div class="hearts" id="hearts-container"></div>
 
 <div class="wrap" id="login">
     <div class="card">
-        <h3>Digite a senha</h3>
-        <input type="password" id="password" placeholder="Sua senha secreta">
-        <button onclick="check()">Entrar</button>
-        <div id="error">Senha incorreta</div>
+        <h3>Nosso Espaço</h3>
+        <p class="subtitle">Um lugar reservado para quem mudou a minha vida.</p>
+        
+        <input type="password" id="password" placeholder="Digite nossa data mágica">
+        <button onclick="check()">Acessar Carta</button>
+        
+        <div class="hint">Dica: O dia em que nosso destino começou a mudar (DDMMAA)</div>
+        <div id="error">Senha incorreta, tente novamente.</div>
     </div>
 </div>
 
@@ -213,8 +222,50 @@ h2 {
 </div>
 
 <script>
-const SECRET = "20012025";
+// A SENHA NOVA AQUI
+const SECRET = "200125";
 
+// Função para gerar corações flutuantes no fundo
+function createFloatingHearts(count) {
+    const container = document.getElementById("hearts-container");
+    for(let i = 0; i < count; i++) {
+        const heart = document.createElement("span");
+        heart.innerHTML = "❤";
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.animationDuration = (Math.random() * 15 + 10) + "s"; // Entre 10s e 25s
+        heart.style.animationDelay = (Math.random() * 5) + "s";
+        heart.style.fontSize = (Math.random() * 12 + 12) + "px"; // Tamanhos variados
+        container.appendChild(heart);
+    }
+}
+
+// Cria alguns corações na tela de login
+createFloatingHearts(15);
+
+// Função para a explosão de corações
+function triggerHeartExplosion() {
+    for(let i = 0; i < 60; i++) {
+        const h = document.createElement("div");
+        h.className = "explosion-heart";
+        h.innerHTML = "❤";
+        h.style.color = "#ff3b30"; // Vermelho vibrante
+        h.style.left = "50%";
+        h.style.top = "50%";
+        
+        // Calcula a direção da explosão num círculo de 360 graus
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 500 + 100; // Força da explosão
+        h.style.setProperty("--tx", Math.cos(angle) * velocity + "px");
+        h.style.setProperty("--ty", Math.sin(angle) * velocity + "px");
+        
+        document.body.appendChild(h);
+        
+        // Remove os corações da explosão do código depois da animação
+        setTimeout(() => h.remove(), 1000);
+    }
+}
+
+// Função de validação da senha
 function check() {
     const val = document.getElementById("password").value;
     const loginWrap = document.getElementById("login");
@@ -222,26 +273,32 @@ function check() {
     const errorMsg = document.getElementById("error");
 
     if(val === SECRET) {
-        // Esconde o erro se estiver aparecendo
-        errorMsg.style.opacity = "0";
+        errorMsg.style.opacity = "0"; // Esconde o erro
         
-        // Faz o card de login sumir suavemente
+        // 1. Dispara a explosão de corações
+        triggerHeartExplosion();
+        
+        // 2. Faz o card de login sumir
         loginWrap.style.opacity = "0";
         loginWrap.style.transform = "scale(0.95)";
         
-        // Aguarda a animação de saída antes de mostrar o texto
+        // 3. Espera o login sumir para mostrar a carta e adicionar mais corações
         setTimeout(() => {
             loginWrap.style.display = "none";
             content.style.display = "block";
             
-            // Força a renderização do display: block antes de animar a opacidade
+            // Adiciona MUITOS corações no fundo para a leitura da carta
+            createFloatingHearts(50);
+            
+            // Anima a carta subindo suavemente
             setTimeout(() => {
                 content.style.animation = "slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards";
             }, 50);
-        }, 600); // 600ms é o tempo da transição no CSS
+        }, 600);
+        
     } else {
-        // Mostra a mensagem de erro
-        errorMsg.style.opacity = "1";
+        errorMsg.style.opacity = "1"; // Mostra o erro
+        document.getElementById("password").value = ""; // Limpa o campo
     }
 }
 
